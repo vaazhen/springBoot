@@ -20,7 +20,6 @@ public class UserServiceImp implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
-    @Autowired
     public UserServiceImp(@Lazy PasswordEncoder passwordEncoder, UserRepository userRepository, RoleRepository roleRepository) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;

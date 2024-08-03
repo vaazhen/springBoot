@@ -19,7 +19,7 @@ public class AdminController {
 
     private final UserServiceImp userServiceImp;
 
-    @Autowired
+    
     public AdminController(UserServiceImp userServiceImp) {
         this.userServiceImp = userServiceImp;
     }
