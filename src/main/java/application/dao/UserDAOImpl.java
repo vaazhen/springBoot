@@ -15,7 +15,6 @@ public class UserDAOImpl implements UserDAO {
     private EntityManager entityManager;
 
     @Override
-    @Transactional
     public void addUser(User user) {
         entityManager.persist(user);
     }
@@ -32,7 +31,6 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    @Transactional
     public void deleteUser(int id) {
         entityManager.remove(getUser(id));
     }

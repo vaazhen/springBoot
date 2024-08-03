@@ -1,5 +1,6 @@
 package application.service;
 import application.model.User;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import application.dao.UserDAO;
@@ -18,6 +19,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void addUser(User user) {
         userDAO.addUser(user);
     }
@@ -28,6 +30,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void deleteUser(int id) {
         userDAO.deleteUser(id);
     }
