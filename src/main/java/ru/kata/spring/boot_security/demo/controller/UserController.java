@@ -13,7 +13,7 @@ import java.security.Principal;
 public class UserController {
 
     private final UserServiceImp userServiceImp;
-    @Autowired
+
     public UserController(UserServiceImp userServiceImp) {
         this.userServiceImp = userServiceImp;
     }

@@ -15,7 +15,7 @@ import java.util.List;
 public class AutoRegisterUser {
     private final UserServiceImp userServiceImp;
     private final RoleRepository roleRepository;
-    @Autowired
+
     public AutoRegisterUser(UserServiceImp userServiceImp, RoleRepository roleRepository) {
         this.userServiceImp = userServiceImp;
         this.roleRepository = roleRepository;
