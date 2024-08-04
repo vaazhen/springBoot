@@ -11,9 +11,10 @@ import ru.kata.spring.boot_security.demo.service.UserServiceImp;
 import ru.kata.spring.boot_security.demo.model.User;
 
 import java.security.Principal;
+import java.util.List;
 
 
-@Controller
+@RestController
 @RequestMapping("/admin")
 public class AdminController {
 
@@ -24,42 +25,35 @@ public class AdminController {
         this.userServiceImp = userServiceImp;
     }
 
-
+    @GetMapping("/roles")
+    public List<String> getAllRoles() {
+        return List.of("ROLE_ADMIN", "ROLE_USER");
+    }
 
     @GetMapping("/users")
-    public String sayUsers(Model model, Principal principal) {
-        User user = new User();
-        model.addAttribute("users", userServiceImp.findAll());
-        model.addAttribute("userNav", userServiceImp.findByUsername(principal.getName()));
-        model.addAttribute("roleSet", userServiceImp.getAllRoles());
-        model.addAttribute("user", user);
-        System.out.println(userServiceImp.findByUsername(principal.getName()));
-        return "users";
+    public List<User> sayUsers() {
+        return userServiceImp.findAll();
+
     }
 
     @PostMapping("/new")
-    public String create(@ModelAttribute("new_user") User user , @RequestParam(value = "role") String role) {
-        user.setRoles(userServiceImp.findByRoleName(role));
+    public void create(User user) {
         userServiceImp.saveUser(user);
-        return "redirect:/admin/users";
     }
 
 
     @PatchMapping("/update")
-    public String updateUsers(@ModelAttribute("user") User user, @RequestParam(value = "role") String role) {
-        user.setRoles(userServiceImp.findByRoleName(role));
+    public void updateUsers(User user) {
         userServiceImp.saveUser(user);
-        return "redirect:/admin/users";
     }
 
     @DeleteMapping("/delete/{id}")
-    public String deleteUser(@PathVariable("id") Long id) {
+    public void deleteUser(@PathVariable("id") Long id) {
         userServiceImp.deleteById(id);
-        return "redirect:/admin/users";
     }
-    @GetMapping("/admin_all_user")
-    public String sayUsers(Principal principal,Model model) {
-        model.addAttribute("user",userServiceImp.findByUsername(principal.getName()));
-        return "/admin_all_user";
-    }
+//    @GetMapping("/admin_all_user")
+//    public String sayUsers(Principal principal,Model model) {
+//        model.addAttribute("user",userServiceImp.findByUsername(principal.getName()));
+//        return "/admin_all_user";
+//    }
 }
