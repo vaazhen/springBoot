@@ -7,14 +7,16 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
+<script src="/js/jquery-3.7.1.min.js"></script>
+<script src="/js/userScript.js"></script>
 <nav class="navbar navbar-dark bg-dark">
     <div class="container-fluid">
         <div>
-            <span class="navbar-text text-white font-weight-bold" th:text="${user.getEmail()}"></span>
+            <span class="navbar-text text-white font-weight-bold" id = "userNavEmail"></span>
             <span class="navbar-text text-white">with roles:</span>
-            <span class="navbar-text text-white" th:text="${user.getRoles()}"></span>
+            <span class="navbar-text text-white"  id = "userNavRoles"></span>
         </div>
-        <form th:action="@{/logout}" method="post">
+        <form action="/logout" method="post">
             <button type="submit" class="btn btn-dark">Logout</button>
         </form>
     </div>
@@ -26,9 +28,12 @@
         <!-- left-panel -->
         <div class="col-2 bg-white pt-3 px-0">
             <div class="container-fluid bg-white" >
-                <ul class="nav flex-column nav-pills" role="tablist">
+                <ul class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
+                    <li class="nav-item" id = "adminHideButton">
+                        <a href="/admin/users.html" class="nav-link">Admin</a>
+                    </li>
                     <li class="nav-item">
-                        <a href="/user" class="nav-link active">User</a>
+                        <a href="/user.html" class="nav-link active">User</a>
                     </li>
                 </ul>
             </div>
@@ -38,7 +43,7 @@
                 <br>
                 <h1>Информация юзера</h1>
                 <br>
-                <table class="table table-striped">
+                <table class="table table-striped" id = "userTable">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -49,13 +54,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="user1 : ${user}">
-                            <td th:utext="${user1.getId()}"></td>
-                            <td th:utext="${user1.getUsername()}"></td>
-                            <td th:utext="${user1.getEmail()}"></td>
-                            <td th:utext="${user1.getAge()}"></td>
-                            <td th:utext="${user1.getRoles()}"></td>
-                        </tr>
                     </tbody>
                 </table>
             </div>

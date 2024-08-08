@@ -4,6 +4,7 @@ package ru.kata.spring.boot_security.demo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/api/admin")
 public class AdminController {
 
     private final UserServiceImp userServiceImp;
@@ -37,14 +38,20 @@ public class AdminController {
     }
 
     @PostMapping("/new")
-    public void create(User user) {
+    public void create(@RequestBody User user) {
         userServiceImp.saveUser(user);
     }
 
 
     @PatchMapping("/update")
-    public void updateUsers(User user) {
+    public void updateUsers(@RequestBody User user) {
         userServiceImp.saveUser(user);
+    }
+
+
+    @GetMapping("/user")
+    public User getCurrentUser() {
+         return userServiceImp.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
     }
 
     @DeleteMapping("/delete/{id}")

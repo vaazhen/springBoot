@@ -41,6 +41,11 @@ public class UserServiceImp implements UserService {
 
     @Transactional
     public void saveUser(User user) {
+        List<Role> roles = new ArrayList<>();
+        for(Role role : user.getRoles()) {
+            roles.add(roleRepository.findByName(role.getName()));
+        }
+        user.setRoles(roles);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }

@@ -15,13 +15,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
-    <script>
-        function show(shown, hidden) {
-            document.getElementById(shown).style.display = 'block';
-            document.getElementById(hidden).style.display = 'none';
-            return false;
-        }
-    </script>
+
 </head>
 <body>
 <script src="/js/jquery-3.7.1.min.js"></script>
@@ -74,8 +68,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary closeEdit" data-dismiss="modal">Выйти</button>
-                        <input type="submit" class="btn btn-primary" value="Изменить">
+                        <button type="button"  class="btn btn-secondary closeEdit" data-dismiss="modal">Выйти</button>
+                        <button type="button" id = "submitEdit" class="btn btn-primary" data-dismiss="modal" >Изменить</button>
                     </div>
                 </form>
             </div>
@@ -125,7 +119,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary closeEdit" data-dismiss="modal">Выйти</button>
-                        <input type="submit" class="btn btn-danger" value="Удалить">
+                        <button type="button" id = "submitDelete" class="btn btn-danger" data-dismiss="modal" >Удалить</button>
                     </div>
                 </form>
             </div>
@@ -136,11 +130,11 @@
 <nav class="navbar navbar-dark bg-dark">
     <div class="container-fluid">
         <div>
-            <span class="navbar-text text-white font-weight-bold" th:text="${userNav.getEmail()}"></span>
+            <span class="navbar-text text-white font-weight-bold" id = "userNavEmail"></span>
             <span class="navbar-text text-white">with roles:</span>
-            <span class="navbar-text text-white" th:text="${userNav.getRoles()}"></span>
+            <span class="navbar-text text-white"  id = "userNavRoles"></span>
         </div>
-        <form th:action="@{/logout}" method="post">
+        <form action="/logout" method="post">
             <button type="submit" class="btn btn-dark">Logout</button>
         </form>
     </div>
@@ -154,10 +148,10 @@
             <div class="container-fluid bg-white">
                 <ul class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
                     <li class="nav-item">
-                        <a href="/admin/users" class="nav-link active">Admin</a>
+                        <a href="/admin/users.html" class="nav-link active">Admin</a>
                     </li>
                     <li class="nav-item">
-                        <a href="/admin/admin_all_user" class="nav-link">User</a>
+                        <a href="/user.html" class="nav-link">User</a>
                     </li>
                 </ul>
             </div>
@@ -174,10 +168,10 @@
                 <div>
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
-                            <a class="nav-link active" onclick="return show('showUsers','addUser');">Users Table</a>
+                            <a class="nav-link active usersTable" style="cursor: pointer;"  >Users Table</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" onclick="return show('addUser','showUsers');">New user</a>
+                            <a class="nav-link newUserPage" style="cursor: pointer;" >New user</a>
                         </li>
                     </ul>
                 </div>
@@ -204,10 +198,10 @@
                 <div>
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
-                            <a class="nav-link" onclick="return show('showUsers','addUser');">Users Table</a>
+                            <a class="nav-link usersTable" style="cursor: pointer;" >Users Table</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" onclick="return show('addUser','showUsers');">New user</a>
+                            <a class="nav-link active newUserPage" style="cursor: pointer;" >New user</a>
                         </li>
                     </ul>
                 </div>
@@ -217,39 +211,34 @@
                             <h4 style="padding: 10px 10px 10px 15px">Добавление нового юзера</h4>
                         </div>
                         <div class="container-fluid border bg-white py-3 px-4">
-                            <form th:action="@{/admin/new}" th:object="${user}" th:method="POST" style="text-align: center; font-weight:bold">
+                            <form  style="text-align: center; font-weight:bold">
                                 <div class="form-group col-4 container-sm bg-white justify-content-center">
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label for="newUser" class="col-form-label">Имя</label>
-                                            <input type="text" class="form-control" th:field="*{username}" id="newUser" name="newUser" placeholder="Имя">
+                                            <input type="text" class="form-control"  id="newUser" name="newUser" placeholder="Имя">
                                         </div>
                                         <div class="form-group">
                                             <label for="newEmail" class="col-form-label">eMail</label>
-                                            <input type="text" class="form-control" th:field="*{email}" id="newEmail" name="newEmail">
+                                            <input type="text" class="form-control"  id="newEmail" name="newEmail">
                                         </div>
                                         <div class="form-group">
                                             <label for="newAge" class="col-form-label">Возраст</label>
-                                            <input type="number" class="form-control" th:field="*{age}" id="newAge" name="newAge">
+                                            <input type="number" class="form-control"  id="newAge" name="newAge">
                                         </div>
                                         <div class="form-group">
                                             <label for="newPassword" class="col-form-label">Пароль</label>
-                                            <input type="text" class="form-control" th:field="*{password}" id="newPassword" name="newPassword">
+                                            <input type="text" class="form-control"  id="newPassword" name="newPassword">
                                         </div>
                                         <div class="form-group">
-                                            <strong><label for="role">Роль</label></strong>
+                                            <strong><label for="newRole">Роль</label></strong>
                                             <select multiple class="custom-select w-100"
-                                                    size="2" id="role" name="role">
-                                                <option
-                                                        th:each="role : ${roleSet}"
-                                                        th:text="${role.getName()}"
-                                                        th:value="${role.name}">
-                                                </option>
+                                                    size="2" id="newRole" name="role">
                                             </select>
                                         </div>
                                     </div>
                                 </div>
-                                <input type="submit" class="btn btn-success" value="Дабавить нового юзера">
+                                <button type="button" id = "addNewUser" class="btn btn-success" data-dismiss="modal" >Добавить Пользователя </button>
                             </form>
                         </div>
                     </div>
